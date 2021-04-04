@@ -1,7 +1,8 @@
 {
+  "author": "Garth Toland",
   "name": "npm-package-updater",
   "displayName": "npm-package-updater",
-  "description": "deschehrheheheh",
+  "description": "Update your dependencies at once.",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.55.0"
@@ -12,6 +13,15 @@
   "activationEvents": [
     "onCommand:npm-package-updater.helloWorld"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/garthtee/npm-package-updater.git"
+  },
+  "bugs": {
+    "url": "https://github.com/garthtee/npm-package-updater/issues"
+  },
+  "homepage": "https://github.com/garthtee/npm-package-updater#readme",
+  "license": "MIT",
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
