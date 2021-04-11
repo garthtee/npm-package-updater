@@ -3,7 +3,8 @@
 	"name": "npm-package-updater",
 	"displayName": "npm-package-updater",
 	"description": "Update your dependencies at to the latest straight from NPM.",
-	"version": "0.0.1",
+	"version": "1.0.0",
+  "publisher": "GarthToland",
 	"engines": {
 		"vscode": "^1.55.0"
 	},
