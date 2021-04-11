@@ -6,30 +6,19 @@ When you run the extension it will check if you like to create a backup of your 
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+To run an update on all your dependencies run the `Update All Latest: NPM Package Updater` command from your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette). You will need to reinstall your package once complete by running `npm install` in your terminal.
 
-For example if there is an image subfolder under your extension project workspace:
+See it in action here:
+![Usage](assets/use-extension.gif)
 
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
 
 This will only work with Javascript projects that contain a `package.json` file.
 
 ## Release Notes
-
-Users appreciate release notes as you update your extension.
-
 ### 1.0.0
 
 Initial release of the npm-package-updater. Allowing update of all packages to their latest version (Majors included). Enjoy 😃
 
 ---
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-- [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
