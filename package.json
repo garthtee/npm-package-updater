@@ -2,7 +2,7 @@
 	"author": "Garth Toland",
 	"name": "npm-package-updater",
 	"displayName": "NPM Package Updater",
-	"description": "Update your dependencies at to the latest straight from NPM.",
+	"description": "Update your dependencies to the latest automatically, straight from NPM.",
 	"version": "1.0.0",
   "publisher": "GarthToland",
 	"engines": {
