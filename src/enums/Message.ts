@@ -1,7 +1,7 @@
 enum Message {
   ERROR,
   INFO,
-  WARN
+  WARN,
 }
 
 export default Message;

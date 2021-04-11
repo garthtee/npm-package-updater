@@ -11,12 +11,12 @@ To run an update on all your dependencies run the `Update All Latest: NPM Packag
 See it in action here:
 ![Usage](https://i.imgur.com/1AiMd5Z.gif)
 
-
 ## Requirements
 
 This will only work with Javascript projects that contain a `package.json` file.
 
 ## Release Notes
+
 ### 1.0.0
 
 Initial release of the npm-package-updater. Allowing update of all packages to their latest version (Majors included). Enjoy 😃

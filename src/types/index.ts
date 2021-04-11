@@ -1,5 +1,5 @@
 interface IDepItem {
-	[dependency: string]: string;
+  [dependency: string]: string;
 }
 
 export {IDepItem};
