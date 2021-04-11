@@ -1,27 +1,137 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
+import {promises as fs} from "fs";
+import {displayMessage, doBackup, getKeyValues, getPath} from "./utils/helpers";
+import {getDependencies, getLatestVersion} from "./utils/dependencyUtils";
+import Message from "./enums/Message";
+import {DO_NOT_SHOW_AGAIN, SUCCESS_MSG} from "./constants/generic";
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+interface IDep {
+	dependency: string;
+	version: string;
+}
+
+// Called when the extension is activated
 export function activate(context: vscode.ExtensionContext) {
+	console.log("npm-package-updater is now active!");
+  
+	let disposable = vscode.commands.registerCommand(
+    "npm-package-updater.updateLatestVersions",
+		async () => {
+      const path = getPath();
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "npm-package-updater" is now active!');
+      if (!path) {
+        displayMessage("Working folder not found, open a folder an try again.", Message.ERROR);
+        return;
+      }
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('npm-package-updater.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
+			const packageFilePath = `${path}/package.json`;
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from npm-package-updater!');
-	});
+      try {
+        // Check if file exists
+        await fs.access(packageFilePath);
+      } catch (error) {
+        displayMessage("package.json file not found.", Message.ERROR);
+        return;
+      }
+      
+      if (!await doBackup(context, packageFilePath)) {
+        return;
+      }
+
+			await vscode.window.withProgress(
+				{
+					location: vscode.ProgressLocation.Window,
+					cancellable: false,
+					title: "NPM-PU",
+				},
+				async (progress) => {
+					progress.report({increment: 0});
+
+					// Get deps
+					const {
+						dependencies,
+						devDependencies,
+						packageObj,
+					} = await getDependencies(packageFilePath);
+
+					progress.report({
+            message: "Getting latest dependencies",
+            increment: 10
+          });
+
+					// For each dep/devDep, save the latest version tag (if greater)
+					const updatedDependencies = await Promise.all(
+						Object.entries(dependencies).map(
+							async ([dependency, version]: any) => {
+								const latestVersion = await getLatestVersion(
+									dependency,
+									version
+								);
+
+								return {
+									[dependency]: latestVersion,
+								};
+							}
+						)
+					);
+
+					progress.report({
+            message: "Getting latest devDependencies",
+            increment: 40
+          });
+
+					const updatedDevDependencies = await Promise.all(
+						Object.entries(devDependencies).map(
+							async ([dependency, version]: any) => {
+								const latestVersion = await getLatestVersion(
+									dependency,
+									version
+								);
+
+								return {
+									[dependency]: latestVersion,
+								};
+							}
+						)
+					);
+
+					progress.report({
+            message: "Updating package.json file",
+            increment: 80
+          });
+
+					// Write deps back to the file
+					await fs.writeFile(
+						packageFilePath,
+						JSON.stringify(
+							{
+								...packageObj,
+								dependencies: getKeyValues(updatedDependencies),
+								devDependencies: getKeyValues(updatedDevDependencies),
+							},
+							null,
+							"\t"
+						)
+					);
+
+          progress.report({increment: 100});
+				}
+			);
+
+      if (!context.globalState.get(SUCCESS_MSG)) {
+        const completeMessageOptions = [DO_NOT_SHOW_AGAIN, 'Ok'];
+        displayMessage("Version update complete.", Message.INFO, completeMessageOptions)
+        .then((isOk) => {
+          if (isOk === completeMessageOptions[0]) {
+            context.globalState.update(SUCCESS_MSG, true);
+          }
+        });
+      }
+		}
+	);
 
 	context.subscriptions.push(disposable);
 }
 
-// this method is called when your extension is deactivated
+// Called when the extension is finished
 export function deactivate() {}
