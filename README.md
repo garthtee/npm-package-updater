@@ -14,16 +14,3 @@ See it in action here:
 ## Requirements
 
 This will only work with Javascript projects that contain a `package.json` file.
-
-## Release Notes
-### 1.0.3
-
-Error handling for package search. Now prints message to console.
-
-### 1.0.2
-
-Excluding beta and alpha versions.
-
-### 1.0.1
-
-Allowing for pre selectors in versions. E.g. `^1.1.1`.
