@@ -16,6 +16,11 @@ const getDependencies = async (packageFilePath: string) => {
 };
 
 const getLatestVersion = async (dep: string, currentVersion: string) => {
+  const validRegex = new RegExp(/^([\^~]?)([\d]+).([\d]+).([\d]*)$/);
+  if (!validRegex.test(currentVersion)) {
+    return currentVersion;   
+  }
+
   const packageInfo = await getPackage(dep);
   const numberRegex = /[^\d.]/g;
 
