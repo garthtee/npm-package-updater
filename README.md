@@ -16,13 +16,11 @@ See it in action here:
 This will only work with Javascript projects that contain a `package.json` file.
 
 ## Release Notes
+### 1.0.2
+
+Excluding beta and alpha versions.
+---
 ### 1.0.1
 
 Allowing for pre selectors in versions. E.g. `^1.1.1`.
-
----
-### 1.0.0
-
-Initial release of the npm-package-updater. Allowing update of all packages to their latest version (Majors included). Enjoy 😃
-
 ---
