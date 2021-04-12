@@ -17,10 +17,11 @@ const getDependencies = async (packageFilePath: string) => {
 
 const getLatestVersion = async (dep: string, currentVersion: string) => {
   const packageInfo = await getPackage(dep);
+  const numberRegex = /[^\d.]/g;
 
   const latestVersion = packageInfo["dist-tags"]?.latest;
-  const currentSplit = currentVersion.split(".");
-  const latestSplit = latestVersion?.split(".");
+  const currentSplit = currentVersion?.replaceAll(numberRegex, "").split(".");
+  const latestSplit = latestVersion?.replaceAll(numberRegex, "").split(".");
 
   const latestMajor = latestSplit[0];
   const latestMinor = latestSplit[1];
@@ -37,6 +38,9 @@ const getLatestVersion = async (dep: string, currentVersion: string) => {
       latestMinor === currentMinor &&
       latestMajor === currentMajor)
   ) {
+    if (!currentVersion[0].match(/^\d/)) {
+      return `${currentVersion[0]}${latestVersion}`
+    }
     return latestVersion;
   }
 
