@@ -1,6 +1,6 @@
 import {getPackage} from "../api/api";
 import {promises as fs} from "fs";
-import { AxiosError } from "axios";
+import {AxiosError} from "axios";
 
 const getDependencies = async (packageFilePath: string) => {
   const fileContents = await fs.readFile(packageFilePath);
@@ -19,7 +19,7 @@ const getDependencies = async (packageFilePath: string) => {
 const getLatestVersion = async (dep: string, currentVersion: string) => {
   const validRegex = new RegExp(/^([\^~]?)([\d]+).([\d]+).([\d]*)$/);
   if (!validRegex.test(currentVersion)) {
-    return currentVersion;   
+    return currentVersion;
   }
 
   try {
@@ -47,7 +47,7 @@ const getLatestVersion = async (dep: string, currentVersion: string) => {
         latestMajor === currentMajor)
     ) {
       if (!currentVersion[0].match(/^\d/)) {
-        return `${currentVersion[0]}${latestVersion}`
+        return `${currentVersion[0]}${latestVersion}`;
       }
       return latestVersion;
     }

@@ -1,4 +1,5 @@
 # Ignore artifacts:
+.husky/
+.vscode/
 node_modules/
 out/
-.vscode/

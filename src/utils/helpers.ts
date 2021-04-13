@@ -36,7 +36,7 @@ const getPath = () => {
  * @returns Thenable
  */
 const displayMessage = (text: string, type: Message, options?: string[]) => {
-  const BASE = "NPM-PU: ";
+  const BASE = "NPM Updater: ";
   const message = `${BASE}${text}`;
 
   switch (type) {
@@ -68,7 +68,7 @@ const displayMessage = (text: string, type: Message, options?: string[]) => {
  * Checks if user would like to backup their package.json file
  * @param context Extension context
  * @param filePath Package.json file path
- * @returns Boolean whether successful
+ * @returns boolean Whether successful
  */
 const doBackup = async (context: vscode.ExtensionContext, filePath: string) => {
   if (context.globalState.get(BACKUP_MSG)) {
