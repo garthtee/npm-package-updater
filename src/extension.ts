@@ -45,7 +45,7 @@ export function activate(context: vscode.ExtensionContext) {
         {
           location: vscode.ProgressLocation.Window,
           cancellable: false,
-          title: "NPM-PU",
+          title: "NPM Updater",
         },
         async (progress) => {
           progress.report({increment: 0});

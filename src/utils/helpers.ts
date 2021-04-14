@@ -35,10 +35,7 @@ const getPath = () => {
  * @param options Button options
  * @returns Thenable
  */
-const displayMessage = (text: string, type: Message, options?: string[]) => {
-  const BASE = "NPM Updater: ";
-  const message = `${BASE}${text}`;
-
+const displayMessage = (message: string, type: Message, options?: string[]) => {
   switch (type) {
     case Message.ERROR: {
       if (options) {
