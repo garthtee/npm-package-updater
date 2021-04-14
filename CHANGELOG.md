@@ -1,12 +1,6 @@
 # Change Log
 
-## 1.1.2 - 2021-04-14
-
-- License removed.
-
-## 1.1.1 - 2021-04-14
-
-- Changelog fixed.
+Any substantial release information, I'll list it here :-)
 
 ## 1.1.0 - 2021-04-14
 
