@@ -14,5 +14,3 @@ See it in action here:
 ## Requirements
 
 This will only work with Javascript projects that contain a `package.json` file.
-
-**Please note**: Package image is only intended for use with this extension and is subject to copyright
