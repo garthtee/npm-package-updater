@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.1.1 - 2021-04-14
+
+- Changelog fixed.
+
 ## 1.1.0 - 2021-04-14
 
 - New extension icon.
