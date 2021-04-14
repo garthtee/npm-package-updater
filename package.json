@@ -24,7 +24,7 @@
   "homepage": "https://github.com/garthtee/npm-package-updater#readme",
   "license": "MIT",
   "main": "./out/extension.js",
-  "icon": "./src/images/icon.png",
+  "icon": "images/icon.png",
   "contributes": {
     "commands": [
       {
