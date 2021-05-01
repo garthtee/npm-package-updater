@@ -1,5 +1,7 @@
 # NPM Package Updater
 
+[![version](https://img.shields.io/vscode-marketplace/v/GarthToland.npm-package-updater.svg?style=flat-square&label=Visual%20Studio%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=GarthToland.npm-package-updater)
+
 NPM Package Updater automatically checks the most up-to-date latest version of each dependency in your `package.json` file (both dependencies and devDependencies).
 
 When you run the extension it will check if you like to create a backup of your `package.json` file. If you use git or another version control system you shouldn't need this.
