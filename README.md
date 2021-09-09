@@ -20,3 +20,9 @@ Be sure to **reinstall your packages** once complete by running `npm install` in
 
 See it in action here:
 ![Usage](https://i.imgur.com/1AiMd5Z.gif)
+
+## Settings
+
+#### Indentation size/type
+
+This extension allows for customisable indentation types. Whether you prefer tabs or spaces it's your decision ;) Look for the `Npm Package Updater: Indentation` setting. It can be set to a number for the number of spaces, or the word `tab` to indicate tabs.
