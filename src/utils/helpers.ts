@@ -29,7 +29,7 @@ const getPath = () => {
 };
 
 /**
- * VSCode message wrapper to prepend
+ * VSCode message wrapper to prepend extension name.
  * @param text Message text
  * @param type Type of message
  * @param options Button options
@@ -62,7 +62,7 @@ const displayMessage = (message: string, type: Message, options?: string[]) => {
 };
 
 /**
- * Checks if user would like to backup their package.json file
+ * Checks if user would like to backup their package.json file.
  * @param context Extension context
  * @param filePath Package.json file path
  * @returns boolean Whether successful
@@ -91,4 +91,41 @@ const doBackup = async (context: vscode.ExtensionContext, filePath: string) => {
   return true;
 };
 
-export {getKeyValues, getPath, displayMessage, doBackup};
+const isPerfectVersion = (version: string) =>
+  !version.replace(/([0-9]*)([.])([0-9]*)([.])([0-9]*)/g, "");
+
+const getVersion = (version: string) =>
+  version.match(/([0-9]*)([.])([0-9]*)([.])([0-9]*)/g)?.[0] as string;
+
+const getVersionNumbers = (version: string) => {
+  const split = getVersion(version).split(".");
+
+  try {
+    const major = Number.parseInt(split[0]);
+    const minor = Number.parseInt(split[1]);
+    const patch = Number.parseInt(split[2]);
+
+    return {major, minor, patch};
+  } catch (e) {
+    throw new Error("Error occurred while finding version numbers.");
+  }
+};
+
+const consoleLogError = (error: any) => {
+  if (error?.isAxiosError) {
+    console.error(error.message);
+  } else {
+    console.log(error);
+  }
+};
+
+export {
+  getKeyValues,
+  getPath,
+  displayMessage,
+  doBackup,
+  isPerfectVersion,
+  getVersion,
+  getVersionNumbers,
+  consoleLogError,
+};

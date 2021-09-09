@@ -2,17 +2,18 @@
   "author": "Garth Toland",
   "name": "npm-package-updater",
   "displayName": "NPM Package Updater",
-  "description": "Update your dependencies to the latest automatically, straight from NPM.",
-  "version": "1.1.2",
+  "description": "Commands for updating your project's NPM dependencies.",
+  "version": "1.2.0",
   "publisher": "GarthToland",
   "engines": {
-    "vscode": "^1.55.0"
+    "vscode": "^1.60.0"
   },
   "categories": [
     "Other"
   ],
   "activationEvents": [
-    "onCommand:npm-package-updater.updateLatestVersions"
+    "onCommand:npm-package-updater.updateLatestMajors",
+    "onCommand:npm-package-updater.updateLatestMinors"
   ],
   "repository": {
     "type": "git",
@@ -26,17 +27,36 @@
   "main": "./out/extension.js",
   "icon": "images/icon.png",
   "contributes": {
+    "configuration": {
+      "title": "NPM Package Updater",
+      "properties": {
+        "npmPackageUpdater.indentation": {
+          "type": "string",
+          "default": 2,
+          "description": "Set file indentation type for package.json formatting (e.g. 2 for two spaces or the word tab to use tabs)."
+        }
+      }
+    },
     "commands": [
       {
-        "command": "npm-package-updater.updateLatestVersions",
-        "title": "Update All Latest: NPM Package Updater"
+        "command": "npm-package-updater.updateLatestMajors",
+        "title": "Update Latest Majors: NPM Package Updater"
+      },
+      {
+        "command": "npm-package-updater.updateLatestMinors",
+        "title": "Update Latest Minors: NPM Package Updater"
       }
     ],
     "keybindings": [
       {
-        "command": "npm-package-updater.updateLatestVersions",
-        "key": "ctrl+shift+u",
-        "mac": "ctrl+shift+u"
+        "command": "npm-package-updater.updateLatestMajors",
+        "key": "ctrl+shift+m",
+        "mac": "ctrl+shift+m"
+      },
+      {
+        "command": "npm-package-updater.updateLatestMinors",
+        "key": "ctrl+shift+n",
+        "mac": "ctrl+shift+n"
       }
     ]
   },
@@ -52,21 +72,21 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@types/glob": "^7.1.3",
-    "@types/mocha": "^8.0.4",
-    "@types/node": "^12.20.7",
-    "@types/vscode": "^1.55.0",
-    "@typescript-eslint/eslint-plugin": "^4.14.1",
-    "@typescript-eslint/parser": "^4.14.1",
-    "eslint": "^7.19.0",
-    "glob": "^7.1.6",
-    "mocha": "^8.2.1",
+    "@types/glob": "7.1.3",
+    "@types/mocha": "8.0.4",
+    "@types/node": "12.20.7",
+    "@types/vscode": "1.55.0",
+    "@typescript-eslint/eslint-plugin": "4.14.1",
+    "@typescript-eslint/parser": "4.14.1",
+    "eslint": "7.19.0",
+    "glob": "7.1.6",
+    "husky": "6.0.0",
+    "mocha": "8.2.1",
     "prettier": "2.2.1",
-    "typescript": "^4.1.3",
-    "vscode-test": "^1.5.0",
-    "husky": "^6.0.0"
+    "typescript": "4.1.3",
+    "vscode-test": "1.5.0"
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "0.21.4"
   }
 }

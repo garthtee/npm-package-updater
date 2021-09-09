@@ -2,6 +2,11 @@
 
 Any substantial release information, I'll list it here :-)
 
+## 1.2.0 - 2021-09-09
+
+- Update minor and patch versions of packages with the new `Update Latests Minors: NPM Package Updater` command.
+- Bug fixes and improvements.
+
 ## 1.1.0 - 2021-04-14
 
 - New extension icon.

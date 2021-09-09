@@ -1,43 +1,71 @@
-import {getPackage} from "../api/api";
-import {promises as fs} from "fs";
-import {AxiosError} from "axios";
+import {getVersionNumbers, isPerfectVersion} from "./helpers";
 
-const getDependencies = async (packageFilePath: string) => {
-  const fileContents = await fs.readFile(packageFilePath);
-  const packageObj = JSON.parse(fileContents?.toString());
-  const dependencies = packageObj?.dependencies;
-  const devDependencies = packageObj?.devDependencies;
+const isVersionValid = (version: string) => {
+  const validRegex = new RegExp(/^([\^~]?)([\d]+).([\d]+).([\d]*)$/);
 
-  return {
-    fileContents,
-    dependencies,
-    devDependencies,
-    packageObj,
-  };
+  return validRegex.test(version);
 };
 
-const getLatestVersion = async (dep: string, currentVersion: string) => {
-  const validRegex = new RegExp(/^([\^~]?)([\d]+).([\d]+).([\d]*)$/);
-  if (!validRegex.test(currentVersion)) {
-    return currentVersion;
+/**
+ * Checks if newVersion has a higher minor or patch than currentVersion.
+ * @param currentVersion string version.
+ * @param newVersion string version.
+ * @returns string version.
+ */
+const isHigherMinorOrPatch = (currentVersion: string, newVersion: string) => {
+  if (!isPerfectVersion(newVersion) || currentVersion === newVersion) {
+    return;
   }
 
   try {
-    const packageInfo = await getPackage(dep);
+    const {
+      major: currentMajor,
+      minor: currentMinor,
+      patch: currentPatch,
+    } = getVersionNumbers(currentVersion);
+    const {
+      major: newMajor,
+      minor: newMinor,
+      patch: newPatch,
+    } = getVersionNumbers(newVersion);
 
-    const numberRegex = /[^\d.]/g;
+    if (newMajor !== currentMajor) {
+      return false;
+    }
 
-    const latestVersion = packageInfo["dist-tags"]?.latest;
-    const currentSplit = currentVersion?.replaceAll(numberRegex, "").split(".");
-    const latestSplit = latestVersion?.replaceAll(numberRegex, "").split(".");
+    if (newMinor > currentMinor) {
+      return true;
+    }
 
-    const latestMajor = latestSplit[0];
-    const latestMinor = latestSplit[1];
-    const latestPatch = latestSplit[2];
+    // Ensure versions with a high patch and lower minor
+    // aren't seen as the higher version!
+    if (newPatch > currentPatch && newMinor >= currentMinor) {
+      return true;
+    }
+  } catch (e) {
+    console.log(e);
 
-    const currentMajor = currentSplit[0];
-    const currentMinor = currentSplit[1];
-    const currentPatch = currentSplit[2];
+    return false;
+  }
+
+  return false;
+};
+
+const getLatestMajorVersion = (
+  currentVersion: string,
+  latestVersion: string
+) => {
+  try {
+    const {
+      major: currentMajor,
+      minor: currentMinor,
+      patch: currentPatch,
+    } = getVersionNumbers(currentVersion);
+    const {
+      major: latestMajor,
+      minor: latestMinor,
+      patch: latestPatch,
+    } = getVersionNumbers(latestVersion);
 
     if (
       latestMajor > currentMajor ||
@@ -51,13 +79,11 @@ const getLatestVersion = async (dep: string, currentVersion: string) => {
       }
       return latestVersion;
     }
-  } catch (error) {
-    if (error?.isAxiosError) {
-      console.error(error.message);
-    }
+  } catch (error: any) {
+    console.log(error);
   }
 
-  return currentVersion;
+  return latestVersion;
 };
 
-export {getDependencies, getLatestVersion};
+export {isVersionValid, isHigherMinorOrPatch, getLatestMajorVersion};
