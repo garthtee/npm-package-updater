@@ -30,10 +30,22 @@
     "configuration": {
       "title": "NPM Package Updater",
       "properties": {
-        "npmPackageUpdater.indentation": {
+        "npmPackageUpdater.indentationType": {
           "type": "string",
+          "default": "Spaces",
+          "enum": [
+            "Spaces",
+            "Tabs"
+          ],
+          "enumDescriptions": [
+            "Package.json indentation in spaces.",
+            "Package.json indentation in tabs."
+          ]
+        },
+        "npmPackageUpdater.indentationSize": {
+          "type": "number",
           "default": 2,
-          "description": "Set file indentation type for package.json formatting (e.g. 2 for two spaces or the word tab to use tabs)."
+          "description": "Indentation size"
         }
       }
     },
@@ -72,19 +84,19 @@
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@types/glob": "7.1.3",
-    "@types/mocha": "8.0.4",
-    "@types/node": "12.20.7",
-    "@types/vscode": "1.55.0",
-    "@typescript-eslint/eslint-plugin": "4.14.1",
-    "@typescript-eslint/parser": "4.14.1",
-    "eslint": "7.19.0",
-    "glob": "7.1.6",
-    "husky": "6.0.0",
-    "mocha": "8.2.1",
-    "prettier": "2.2.1",
-    "typescript": "4.1.3",
-    "vscode-test": "1.5.0"
+    "@types/glob": "7.1.4",
+    "@types/mocha": "9.0.0",
+    "@types/node": "16.9.1",
+    "@types/vscode": "1.60.0",
+    "@typescript-eslint/eslint-plugin": "4.31.0",
+    "@typescript-eslint/parser": "4.31.0",
+    "eslint": "7.32.0",
+    "glob": "7.1.7",
+    "husky": "7.0.2",
+    "mocha": "9.1.1",
+    "prettier": "2.4.0",
+    "typescript": "4.4.2",
+    "vscode-test": "1.6.1"
   },
   "dependencies": {
     "axios": "0.21.4"

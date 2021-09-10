@@ -53,11 +53,8 @@ export function activate(context: vscode.ExtensionContext) {
 
           // Get & update deps
 
-          const {
-            dependencies,
-            devDependencies,
-            packageObj,
-          } = await getDependencies(packageFilePath);
+          const {dependencies, devDependencies, packageObj} =
+            await getDependencies(packageFilePath);
 
           progress.report({
             message: "Getting latest dependencies",
@@ -139,11 +136,8 @@ export function activate(context: vscode.ExtensionContext) {
 
           // Get & update deps
 
-          const {
-            dependencies,
-            devDependencies,
-            packageObj,
-          } = await getDependencies(packageFilePath);
+          const {dependencies, devDependencies, packageObj} =
+            await getDependencies(packageFilePath);
 
           progress.report({
             message: "Getting latest dependencies",

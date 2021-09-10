@@ -10,19 +10,23 @@ Be sure to **reinstall your packages** once complete by running `npm install` in
 
 ## Features
 
-#### Update to the latest **major, minor and patch** version
+#### <ins>Update to the latest **major, minor and patch** version</ins>
 
-1. Run the `Update Latest Majors: NPM Package Updater` command from your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette).
+1. Run the `Update Latest Majors: NPM Package Updater` command from your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) to get the most update-to-date version of all your packages.
 
-#### Update to the latest **minor and patch** version
+#### <ins>Update to the latest **minor and patch** version</ins>
 
-2. Run the `Update Latest Minors: NPM Package Updater` command from your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette).
+2. Run the `Update Latest Minors: NPM Package Updater` command from your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) to get the most ot to date minor and patch (non-breaking) changes for all of your packages.
 
 See it in action here:
 ![Usage](https://i.imgur.com/1AiMd5Z.gif)
 
 ## Settings
 
-#### Indentation size/type
+#### <ins>Indentation size/type</ins>
 
-This extension allows for customisable indentation types. Whether you prefer tabs or spaces it's your decision ;) Look for the `Npm Package Updater: Indentation` setting. It can be set to a number for the number of spaces, or the word `tab` to indicate tabs.
+This extension allows for customisable indentation types of your package.json. Whether you prefer tabs or spaces it's your decision 😉 Look for the `Npm Package Updater: Indentation Size` & `Npm Package Updater: Indentation Type` settings.
+
+## FYI
+
+[Semantic Versioning](https://docs.npmjs.com/about-semantic-versioning) explanation: For example the version `1.2.3` would be (`1` = Major) (`2 `= Minor) (`3` = Patch)

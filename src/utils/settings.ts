@@ -1,21 +1,26 @@
 import * as vscode from "vscode";
 
+const TAB = "\t";
+
+enum IndentationType {
+  Spaces = "Spaces",
+  Tabs = "Tabs",
+}
+
 const getIndentationSetting = () => {
   // Check if user has specified an indentation size
   const settings = vscode.workspace.getConfiguration("npmPackageUpdater");
-  const settingValue = (settings.get("indentation") as any) as
-    | string
-    | number
-    | undefined;
+  const indentationType: IndentationType =
+    settings.get("indentationType") || IndentationType.Spaces;
+  const indentationSize: number = settings.get("indentationSize") || 2;
 
-  if (!settingValue) {
-    return 2;
+  // If tabs, then add some tabs together
+  if (indentationType === IndentationType.Tabs) {
+    return TAB.repeat(indentationSize);
   }
 
-  const indentation =
-    settingValue === "tab" ? "\t" : Number.parseInt(settingValue?.toString());
-
-  return indentation;
+  // If spaces, then return space amount
+  return indentationSize;
 };
 
 export {getIndentationSetting};
