@@ -12,11 +12,11 @@ Be sure to **reinstall your packages** once complete by running `npm install` in
 
 #### <ins>Update to the latest **major, minor and patch** version</ins>
 
-1. Run the `Update Latest Majors: NPM Package Updater` command from your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) to get the most update-to-date version of all your packages.
+1. Run the `Update Latest Majors: NPM Package Updater` command from your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) to get the most up-to-date version of all your packages.
 
 #### <ins>Update to the latest **minor and patch** version</ins>
 
-2. Run the `Update Latest Minors: NPM Package Updater` command from your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) to get the most ot to date minor and patch (non-breaking) changes for all of your packages.
+2. Run the `Update Latest Minors: NPM Package Updater` command from your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) to get the most up-to-date minor and patch (non-breaking) versions of all of your packages.
 
 See it in action here:
 ![Usage](https://i.imgur.com/1AiMd5Z.gif)

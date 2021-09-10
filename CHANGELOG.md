@@ -2,10 +2,13 @@
 
 Any substantial release information, I'll list it here :-)
 
+## 1.2.3 - 2021-09-10
+
+- Command shortcut updates
+
 ## 1.2.2 - 2021-09-10
 
 - Indentation settings for tabs or spaces
-- Command shortcut updates
 
 ## 1.2.1 - 2021-09-09
 

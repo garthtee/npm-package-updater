@@ -62,13 +62,13 @@
     "keybindings": [
       {
         "command": "npm-package-updater.updateLatestMajors",
-        "key": "ctrl+shift+m",
-        "mac": "ctrl+shift+m"
+        "key": "ctrl+shift+u",
+        "mac": "ctrl+shift+u"
       },
       {
         "command": "npm-package-updater.updateLatestMinors",
-        "key": "ctrl+shift+n",
-        "mac": "ctrl+shift+n"
+        "key": "ctrl+shift+m",
+        "mac": "ctrl+shift+m"
       }
     ]
   },
