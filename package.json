@@ -3,7 +3,7 @@
   "name": "npm-package-updater",
   "displayName": "NPM Package Updater",
   "description": "Commands for updating your project's NPM dependencies.",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "publisher": "GarthToland",
   "engines": {
     "vscode": "^1.60.0"
