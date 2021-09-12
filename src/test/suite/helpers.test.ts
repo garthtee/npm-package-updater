@@ -1,10 +1,10 @@
 import * as assert from "assert";
-
 import * as vscode from "vscode";
 import {
   isPerfectVersion,
   getVersion,
   getVersionNumbers,
+  isNumeric,
 } from "../../utils/helpers";
 
 suite("helpers", () => {
@@ -41,5 +41,22 @@ suite("helpers", () => {
       minor: 4,
       patch: 3,
     });
+  });
+
+  vscode.window.showInformationMessage("Test isNumeric method.");
+
+  test("isNumeric correctly checks for a number", () => {
+    // Assert true
+    assert.ok(isNumeric("0"));
+    assert.ok(isNumeric("6"));
+    assert.ok(isNumeric("3"));
+
+    // Assert false
+    assert.deepStrictEqual(isNumeric("^"), false);
+    assert.deepStrictEqual(isNumeric("~"), false);
+    assert.deepStrictEqual(isNumeric("a"), false);
+    assert.deepStrictEqual(isNumeric("z"), false);
+    assert.deepStrictEqual(isNumeric("A"), false);
+    assert.deepStrictEqual(isNumeric("Z"), false);
   });
 });
