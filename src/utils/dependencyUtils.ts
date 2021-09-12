@@ -67,6 +67,7 @@ const getLatestMajorVersion = (
       patch: latestPatch,
     } = getVersionNumbers(latestVersion);
 
+    // Check if version is newer
     if (
       latestMajor > currentMajor ||
       (latestMinor > currentMinor && latestMajor === currentMajor) ||
@@ -74,6 +75,7 @@ const getLatestMajorVersion = (
         latestMinor === currentMinor &&
         latestMajor === currentMajor)
     ) {
+      // Ensure the leading character is returned with new version
       if (!currentVersion[0].match(/^\d/)) {
         return `${currentVersion[0]}${latestVersion}`;
       }
@@ -83,7 +85,7 @@ const getLatestMajorVersion = (
     console.log(error);
   }
 
-  return latestVersion;
+  return currentVersion;
 };
 
 export {isVersionValid, isHigherMinorOrPatch, getLatestMajorVersion};
