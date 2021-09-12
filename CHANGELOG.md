@@ -2,7 +2,7 @@
 
 Any substantial release information, I'll list it here :-)
 
-## 1.2.4 - 2021-09-12
+## 1.2.5 - 2021-09-12
 
 - Bug fixes.
 - Recognising `x` as a valid character in versions.
