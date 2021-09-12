@@ -5,6 +5,8 @@ import Message from "../enums/Message";
 import YesNo from "../enums/YesNo";
 import {IDepItem} from "../types";
 
+const NUMBER_REGEX = new RegExp("^[0-9]+$");
+
 const getKeyValues = (arr: IDepItem[], initialValue: any = {}) =>
   arr.reduce((acc: IDepItem, item: any) => {
     const entries = Object.entries(item);
@@ -95,15 +97,15 @@ const isPerfectVersion = (version: string) =>
   !version.replace(/([0-9]*)([.])([0-9]*)([.])([0-9]*)/g, "");
 
 const getVersion = (version: string) =>
-  version.match(/([0-9]*)([.])([0-9]*)([.])([0-9]*)/g)?.[0] as string;
+  version.match(/([0-9]*)([.])([0-9]*|[x])([.])([x]|[0-9]*)/g)?.[0] as string;
 
 const getVersionNumbers = (version: string) => {
   const split = getVersion(version).split(".");
 
   try {
     const major = Number.parseInt(split[0]);
-    const minor = Number.parseInt(split[1]);
-    const patch = Number.parseInt(split[2]);
+    const minor = split[1] === "x" ? 0 : Number.parseInt(split[1]);
+    const patch = split[2] === "x" ? 0 : Number.parseInt(split[2]);
 
     return {major, minor, patch};
   } catch (e) {
@@ -119,6 +121,8 @@ const consoleLogError = (error: any) => {
   }
 };
 
+const isNumeric = (char: string) => NUMBER_REGEX.test(char);
+
 export {
   getKeyValues,
   getPath,
@@ -128,4 +132,5 @@ export {
   getVersion,
   getVersionNumbers,
   consoleLogError,
+  isNumeric,
 };

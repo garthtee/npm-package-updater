@@ -2,17 +2,22 @@
 
 Any substantial release information, I'll list it here :-)
 
+## 1.2.4 - 2021-09-12
+
+- Bug fixes.
+- Recognising `x` as a valid character in versions.
+
 ## 1.2.3 - 2021-09-10
 
-- Command shortcut updates
+- Command shortcut updates.
 
 ## 1.2.2 - 2021-09-10
 
-- Indentation settings for tabs or spaces
+- Indentation settings for tabs or spaces.
 
 ## 1.2.1 - 2021-09-09
 
-- Settings docs updates
+- Settings docs updates.
 
 ## 1.2.0 - 2021-09-09
 

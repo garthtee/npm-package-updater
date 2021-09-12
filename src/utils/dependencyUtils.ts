@@ -1,7 +1,7 @@
 import {getVersionNumbers, isPerfectVersion} from "./helpers";
 
 const isVersionValid = (version: string) => {
-  const validRegex = new RegExp(/^([\^~]?)([\d]+).([\d]+).([\d]*)$/);
+  const validRegex = new RegExp(/^([\^~]?)([\d]+).([\d]+|[x]).([\d]*|[x])$/);
 
   return validRegex.test(version);
 };

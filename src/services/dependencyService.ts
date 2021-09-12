@@ -5,7 +5,7 @@ import {
   isHigherMinorOrPatch,
   isVersionValid,
 } from "../utils/dependencyUtils";
-import {consoleLogError, getKeyValues} from "../utils/helpers";
+import {consoleLogError, getKeyValues, isNumeric} from "../utils/helpers";
 import {IDepItem} from "../types";
 import {getIndentationSetting} from "../utils/settings";
 
@@ -59,7 +59,12 @@ const fetchLatestMinorVersion = async (dep: string, currentVersion: string) => {
       }
     });
 
-    return highestMinorPatch;
+    const firstCharacter = currentVersion.charAt(0);
+
+    // Return first character of version of it's not a number (e.g. ~^).
+    return isNumeric(firstCharacter) || highestMinorPatch === currentVersion
+      ? highestMinorPatch
+      : `${firstCharacter}${highestMinorPatch}`;
   } catch (error: any) {
     consoleLogError(error);
   }
