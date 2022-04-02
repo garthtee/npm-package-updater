@@ -23,9 +23,15 @@ See it in action here:
 
 ## Settings
 
+![Settings](https://i.imgur.com/MbvdyQy.png)
+
 #### <ins>Indentation size/type</ins>
 
 This extension allows for customisable indentation types of your package.json. Whether you prefer tabs or spaces it's your decision 😉 Look for the `Npm Package Updater: Indentation Size` & `Npm Package Updater: Indentation Type` settings.
+
+#### <ins>Registry</ins>
+
+Update the registry used for fetching package details. Look for the `Npm Package Updater: Registry` setting.
 
 ## FYI
 
