@@ -7,9 +7,11 @@ enum IndentationType {
   Tabs = "Tabs",
 }
 
+const CONFIG_NAME = "npmPackageUpdater";
+
 const getIndentationSetting = () => {
   // Check if user has specified an indentation size
-  const settings = vscode.workspace.getConfiguration("npmPackageUpdater");
+  const settings = vscode.workspace.getConfiguration(CONFIG_NAME);
   const indentationType: IndentationType =
     settings.get("indentationType") || IndentationType.Spaces;
   const indentationSize: number = settings.get("indentationSize") || 2;
@@ -23,4 +25,13 @@ const getIndentationSetting = () => {
   return indentationSize;
 };
 
-export {getIndentationSetting};
+const getRegistrySetting = () => {
+  const settings = vscode.workspace.getConfiguration(CONFIG_NAME);
+  const registry = settings.get("registry") as string;
+
+  return registry && registry?.trim() !== ""
+    ? registry
+    : "https://registry.npmjs.com";
+};
+
+export {getIndentationSetting, getRegistrySetting};
