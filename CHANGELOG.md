@@ -1,6 +1,7 @@
 # Change Log
 
 Any substantial release information, I'll list it here :-)
+## 1.3.1 - 2022-04-02
 
 ## 1.3.0 - 2022-04-02
 
