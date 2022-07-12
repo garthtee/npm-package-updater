@@ -6,12 +6,13 @@ import {displayMessage} from "./helpers";
 const getCompletedMessage = (context: vscode.ExtensionContext) => {
   if (!context.globalState.get(SUCCESS_MSG)) {
     const completeMessageOptions = [DO_NOT_SHOW_AGAIN, "Ok"];
+
     displayMessage(
       "Version update complete.",
       Message.INFO,
       completeMessageOptions
-    ).then((isOk) => {
-      if (isOk === completeMessageOptions[0]) {
+    ).then((value) => {
+      if (value === DO_NOT_SHOW_AGAIN) {
         context.globalState.update(SUCCESS_MSG, true);
       }
     });

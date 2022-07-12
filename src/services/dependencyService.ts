@@ -3,13 +3,15 @@ import {promises as fs} from "fs";
 import {
   getLatestMajorVersion,
   isHigherMinorOrPatch,
+  isHigherPatch,
   isVersionValid,
 } from "../utils/dependencyUtils";
 import {consoleLogError, getKeyValues, isNumeric} from "../utils/helpers";
 import {IDepItem} from "../types";
 import {getIndentationSetting} from "../utils/settings";
+import {SemanticLevel} from "../enums/SemanticLevel";
 
-const getDependencies = async (packageFilePath: string) => {
+export const getDependencies = async (packageFilePath: string) => {
   const fileContents = await fs.readFile(packageFilePath);
   const packageObj = JSON.parse(fileContents?.toString());
   const dependencies = packageObj?.dependencies;
@@ -33,6 +35,10 @@ const fetchLatestMajorVersion = async (dep: string, currentVersion: string) => {
 
     const latestVersion = packageInfo["dist-tags"]?.latest;
 
+    if (!latestVersion) {
+      return currentVersion;
+    }
+
     return getLatestMajorVersion(currentVersion, latestVersion);
   } catch (error: any) {
     consoleLogError(error);
@@ -41,7 +47,14 @@ const fetchLatestMajorVersion = async (dep: string, currentVersion: string) => {
   return currentVersion;
 };
 
-const fetchLatestMinorVersion = async (dep: string, currentVersion: string) => {
+const checkForHigherVersions = async (
+  dep: string,
+  currentVersion: string,
+  checkerFunc: (
+    currentVersion: string,
+    newVersion: string
+  ) => boolean | undefined
+) => {
   if (!isVersionValid(currentVersion)) {
     return currentVersion;
   }
@@ -52,7 +65,7 @@ const fetchLatestMinorVersion = async (dep: string, currentVersion: string) => {
     let highestMinorPatch = currentVersion;
 
     Object.keys(packageInfo.versions).forEach((version: any) => {
-      if (isHigherMinorOrPatch(highestMinorPatch, version)) {
+      if (checkerFunc(highestMinorPatch, version)) {
         highestMinorPatch = version;
 
         return;
@@ -72,7 +85,7 @@ const fetchLatestMinorVersion = async (dep: string, currentVersion: string) => {
   return currentVersion;
 };
 
-const writeDepsToFile = async (
+export const writeDepsToFile = async (
   packageFilePath: string,
   packageObj: any,
   updatedDependencies: IDepItem[] | null,
@@ -97,19 +110,38 @@ const writeDepsToFile = async (
   fs.writeFile(packageFilePath, JSON.stringify(deps, null, indentation));
 };
 
-const getUpdatedDependencies = async (dependencies: any, isMajor = false) =>
+export const getUpdatedDependencies = async (
+  dependencies: any,
+  semanticLevel: SemanticLevel
+) =>
   dependencies
     ? Promise.all(
         Object.entries(dependencies).map(async ([dependency, version]: any) => {
-          const latestVersion = isMajor
-            ? await fetchLatestMajorVersion(dependency, version)
-            : await fetchLatestMinorVersion(dependency, version);
-
-          return {
-            [dependency]: latestVersion,
-          };
+          switch (semanticLevel) {
+            case SemanticLevel.MAJOR:
+              return {
+                [dependency]: await fetchLatestMajorVersion(
+                  dependency,
+                  version
+                ),
+              };
+            case SemanticLevel.MINOR:
+              return {
+                [dependency]: await checkForHigherVersions(
+                  dependency,
+                  version,
+                  isHigherMinorOrPatch
+                ),
+              };
+            case SemanticLevel.PATCH:
+              return {
+                [dependency]: await checkForHigherVersions(
+                  dependency,
+                  version,
+                  isHigherPatch
+                ),
+              };
+          }
         })
       )
     : null;
-
-export {getDependencies, writeDepsToFile, getUpdatedDependencies};
