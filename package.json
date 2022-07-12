@@ -4,7 +4,7 @@
   "displayName": "NPM Package Updater",
   "description": "Commands for updating your project's NPM dependencies.",
   "version": "1.4.0",
-  "publisher": "Garth Toland",
+  "publisher": "GarthToland",
   "engines": {
     "vscode": "^1.69.0"
   },
