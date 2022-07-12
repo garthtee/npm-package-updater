@@ -3,10 +3,10 @@
   "name": "npm-package-updater",
   "displayName": "NPM Package Updater",
   "description": "Commands for updating your project's NPM dependencies.",
-  "version": "1.2.5",
+  "version": "1.3.1",
   "publisher": "Garth Toland",
   "engines": {
-    "vscode": "^1.60.0"
+    "vscode": "^1.66.0"
   },
   "categories": [
     "Other"
@@ -47,6 +47,11 @@
           "type": "number",
           "default": 2,
           "description": "Indentation size"
+        },
+        "npmPackageUpdater.registry": {
+          "type": "string",
+          "default": "https://registry.npmjs.com",
+          "description": "Registry URL (e.g: https://registry.npmjs.com)"
         }
       }
     },

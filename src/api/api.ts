@@ -1,9 +1,10 @@
 import axios from "axios";
-
-const BASE_API = "https://registry.npmjs.org/";
+import {getRegistrySetting} from "../utils/settings";
 
 const getPackage = async (packageName: string) => {
-  const result = await axios.get(`${BASE_API}${packageName}`);
+  const registry = getRegistrySetting();
+
+  const result = await axios.get(`${registry}/${packageName}`);
 
   return result?.data;
 };

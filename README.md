@@ -42,7 +42,7 @@ This extension allows for customisable indentation types of your package.json. W
 
 #### <ins>Registry</ins>
 
-Use a registry different to the standard NPM one. For example if you're working for an organisation that has it's own registry. Look for the `Npm Package Updater: Registry` setting.
+Update the registry used for fetching package details. You can use a registry different to the standard NPM one (which is set by default). For example if you're working for an organisation that has it's own registry. Look for the `Npm Package Updater: Registry` setting.
 
 ## Useful links
 

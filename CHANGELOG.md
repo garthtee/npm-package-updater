@@ -2,6 +2,12 @@
 
 Any substantial release information, I'll list it here :-)
 
+## 1.3.1 - 2022-04-02
+
+## 1.3.0 - 2022-04-02
+
+- Adding a custom registry setting.
+
 ## 1.2.5 - 2021-09-12
 
 - Bug fixes.
