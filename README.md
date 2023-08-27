@@ -4,11 +4,12 @@
   <img alt="VS Code Marketplace Version" src="https://img.shields.io/vscode-marketplace/v/GarthToland.npm-package-updater.svg?style=flat-square&label=Visual%20Studio%20Code%20Marketplace">
 </a>
 <a href="https://marketplace.visualstudio.com/items?itemName=GarthToland.npm-package-updater">
-  <img alt="VS Code Marketplace Downloads" src="https://img.shields.io/visual-studio-marketplace/d/GarthToland.npm-package-updater">
-</a>
-<a href="https://marketplace.visualstudio.com/items?itemName=GarthToland.npm-package-updater">
   <img alt="VS Code Marketplace Installs" src="https://img.shields.io/visual-studio-marketplace/i/GarthToland.npm-package-updater">
 </a>
+
+<a href="https://www.buymeacoffee.com/garthtoland" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+
+<br/>
 
 NPM Package Updater automatically checks for either the most up-to-date latest version of each dependency in your `package.json` file, or the latest minor or patch versions (both dependencies and devDependencies).
 
