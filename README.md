@@ -19,17 +19,34 @@ Be sure to **reinstall your packages** once complete by running `npm install` or
 
 ## Features
 
-#### <ins>Update to the latest **major, minor and patch** version (Shortcut: `ctrl+shift+u`)</ins>
+The following commands can be accessed from the VSCode [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette).
 
-1. Run the `Update Latest Majors: NPM Package Updater` command from your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) to get the most up-to-date version of all your packages.
+#### <ins>Update Latest Majors</ins>
 
-#### <ins>Update to the latest **minor and patch** version (Shortcut: `ctrl+shift+m`)</ins>
+Run this command to get the most up-to-date version of all your packages.
 
-2. Run the `Update Latest Minors: NPM Package Updater` command from your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) to get the most up-to-date minor and patch versions of all of your packages.
+Shortcuts:
 
-#### <ins>Update to the latest **patch** version (Shortcut: `ctrl+shift+p`)</ins>
+- Windows/Linux: <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>u</kbd>
+- macOS: <kbd>ctrl</kbd>+<kbd>option</kbd>+<kbd>u</kbd>
 
-3. Run the `Update Latest Patches: NPM Package Updater` command from your [command palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette) to get the most up-to-date patch (non-breaking) versions of all of your packages.
+#### <ins>Update Latest Minors</ins>
+
+Run this command to get the most up-to-date minor and patch versions of all of your packages.
+
+Shortcuts:
+
+- Windows/Linux: <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>m</kbd>
+- macOS: <kbd>ctrl</kbd>+<kbd>option</kbd>+<kbd>m</kbd>
+
+#### <ins>Update Latest Patches</ins>
+
+Run this command to get the most up-to-date patch (non-breaking) versions of all of your packages.
+
+Shortcuts:
+
+- Windows/Linux: <kbd>ctrl</kbd>+<kbd>alt</kbd>+<kbd>p</kbd>
+- macOS: <kbd>ctrl</kbd>+<kbd>option</kbd>+<kbd>p</kbd>
 
 ## See it in action here:
 
