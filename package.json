@@ -72,18 +72,18 @@
     "keybindings": [
       {
         "command": "npm-package-updater.updateLatestMajors",
-        "key": "ctrl+shift+u",
-        "mac": "ctrl+shift+u"
+        "key": "ctrl+alt+u",
+        "mac": "ctrl+option+u"
       },
       {
         "command": "npm-package-updater.updateLatestMinors",
-        "key": "ctrl+shift+m",
-        "mac": "ctrl+shift+m"
+        "key": "ctrl+alt+m",
+        "mac": "ctrl+option+m"
       },
       {
         "command": "npm-package-updater.updateLatestPatch",
-        "key": "ctrl+shift+p",
-        "mac": "ctrl+shift+p"
+        "key": "ctrl+alt+p",
+        "mac": "ctrl+option+p"
       }
     ]
   },
