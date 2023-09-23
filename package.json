@@ -3,18 +3,13 @@
   "name": "npm-package-updater",
   "displayName": "NPM Package Updater",
   "description": "Commands for updating your project's NPM dependencies.",
-  "version": "2.0.0",
+  "version": "1.4.0",
   "publisher": "GarthToland",
   "engines": {
-    "vscode": "^1.69.0"
+    "vscode": "^1.82.2"
   },
   "categories": [
     "Other"
-  ],
-  "activationEvents": [
-    "onCommand:npm-package-updater.updateLatestMajors",
-    "onCommand:npm-package-updater.updateLatestMinors",
-    "onCommand:npm-package-updater.updateLatestPatch"
   ],
   "repository": {
     "type": "git",
