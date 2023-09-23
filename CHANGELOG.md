@@ -2,11 +2,16 @@
 
 Any substantial release information, I'll list it here :-)
 
-## 1.3.1 - 2022-04-02
+
+## 2.0.0 - 2023-09-23
+
+- Shortcuts updated as the old ones were causing a conflict with VSCode's default "Open Palette" shortcut. [PR #11](https://github.com/garthtee/npm-package-updater/pull/11)
 
 ## 1.4.0 - 2022-07-12
 
 - Ability to update version to latest patch.
+
+## 1.3.1 - 2022-04-02
 
 ## 1.3.0 - 2022-04-02
 
