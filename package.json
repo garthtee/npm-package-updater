@@ -3,10 +3,10 @@
   "name": "npm-package-updater",
   "displayName": "NPM Package Updater",
   "description": "Commands for updating your project's NPM dependencies.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "publisher": "GarthToland",
   "engines": {
-    "vscode": "^1.82.2"
+    "vscode": "^1.84.2"
   },
   "categories": [
     "Other"
@@ -68,17 +68,17 @@
       {
         "command": "npm-package-updater.updateLatestMajors",
         "key": "ctrl+alt+u",
-        "mac": "ctrl+option+u"
+        "mac": "ctrl+alt+u"
       },
       {
         "command": "npm-package-updater.updateLatestMinors",
         "key": "ctrl+alt+m",
-        "mac": "ctrl+option+m"
+        "mac": "ctrl+alt+m"
       },
       {
         "command": "npm-package-updater.updateLatestPatch",
         "key": "ctrl+alt+p",
-        "mac": "ctrl+option+p"
+        "mac": "ctrl+alt+p"
       }
     ]
   },
