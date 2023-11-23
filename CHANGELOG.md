@@ -2,6 +2,10 @@
 
 Any substantial release information, I'll list it here :-)
 
+## 2.0.2 - 2023-11-24
+
+- Update all packages.
+
 ## 2.0.1 - 2023-11-23
 
 - Fix mac keyboard shortcuts.
