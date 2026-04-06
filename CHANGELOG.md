@@ -1,6 +1,6 @@
 # Change Log
 
-## 2.0.2 - 2026-04-06
+## 2.1.0 - 2026-04-06
 
 - Update all packages to latest versions.
 - Add Jest unit testing infrastructure with vscode mocks.
