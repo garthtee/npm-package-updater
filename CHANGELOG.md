@@ -1,10 +1,10 @@
 # Change Log
 
-Any substantial release information, I'll list it here :-)
+## 2.0.2 - 2026-04-06
 
-## 2.0.2 - 2023-11-24
-
-- Update all packages.
+- Update all packages to latest versions.
+- Add Jest unit testing infrastructure with vscode mocks.
+- Add error handling with user-friendly notifications when package updates fail.
 
 ## 2.0.1 - 2023-11-23
 
