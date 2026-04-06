@@ -3,3 +3,5 @@ out/
 .vscode/
 *.vsix
 .vscode-test/
+test/**/*.js
+test/**/*.js.map

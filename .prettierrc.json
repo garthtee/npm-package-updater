@@ -1,4 +1,8 @@
 {
   "tabWidth": 2,
-  "bracketSpacing": false
+  "bracketSpacing": true,
+  "trailingComma": "none",
+  "semi": false,
+  "objectWrap": "collapse",
+  "printWidth": 120
 }

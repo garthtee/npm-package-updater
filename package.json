@@ -3,10 +3,10 @@
   "name": "npm-package-updater",
   "displayName": "NPM Package Updater",
   "description": "Commands for updating your project's NPM dependencies.",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "publisher": "GarthToland",
   "engines": {
-    "vscode": "^1.84.2"
+    "vscode": "^1.110.0"
   },
   "categories": [
     "Other"
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/garthtee/npm-package-updater#readme",
   "license": "MIT",
   "main": "./out/extension.js",
+  "activationEvents": [],
   "icon": "images/icon.png",
   "contributes": {
     "configuration": {
@@ -88,27 +89,37 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js",
+    "lint:test": "eslint test --ext ts",
+    "test": "jest",
     "tidy": "npx prettier --write .",
     "tidy:check": "npx prettier --check .",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@types/glob": "7.2.0",
-    "@types/mocha": "9.1.1",
-    "@types/node": "18.0.3",
-    "@types/vscode": "1.69.0",
-    "@typescript-eslint/eslint-plugin": "5.30.5",
-    "@typescript-eslint/parser": "5.30.5",
-    "eslint": "8.19.0",
-    "glob": "8.0.3",
-    "husky": "8.0.1",
-    "mocha": "10.0.0",
-    "prettier": "2.7.1",
-    "typescript": "4.7.4",
-    "vscode-test": "1.6.1"
+    "@eslint/js": "9.39.4",
+    "@types/glob": "9.0.0",
+    "@types/jest": "30.0.0",
+    "@types/mocha": "10.0.10",
+    "@types/node": "25.5.2",
+    "@types/vscode": "1.110.0",
+    "@typescript-eslint/eslint-plugin": "8.58.0",
+    "@typescript-eslint/parser": "8.58.0",
+    "eslint": "10.2.0",
+    "glob": "13.0.6",
+    "husky": "9.1.7",
+    "jest": "30.3.0",
+    "mocha": "7.2.0",
+    "module-alias": "2.3.4",
+    "prettier": "3.8.1",
+    "ts-jest": "29.4.9",
+    "ts-node": "10.9.2",
+    "tsconfig-paths": "4.2.0",
+    "tsx": "4.21.0",
+    "typescript": "6.0.2",
+    "typescript-eslint": "8.58.0",
+    "vscode-test": "1.4.1"
   },
   "dependencies": {
-    "axios": "0.27.2"
+    "axios": "1.14.0"
   }
 }
