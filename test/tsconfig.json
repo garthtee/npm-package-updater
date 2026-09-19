@@ -1,18 +1,11 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "ESNext",
-    "lib": ["ESNext"],
-    "strict": false,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "moduleResolution": "node",
+    "noEmit": true,
+    "rootDir": "..",
     "types": ["node", "jest"],
-    "baseUrl": ".",
-    "paths": { "vscode": ["__mocks__/vscode.ts"] }
+    "noUnusedParameters": false
   },
-  "include": ["./**/*.ts", "../src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["../src/**/*.ts", "./**/*.ts"],
+  "exclude": ["../node_modules", "../out"]
 }

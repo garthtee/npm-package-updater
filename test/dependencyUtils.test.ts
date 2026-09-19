@@ -1,6 +1,6 @@
 import {
   isVersionValid,
-  getLatestMajorVersion,
+  getUpdatedMajorVersion,
   isHigherMinorOrPatch,
   isHigherPatch
 } from "../src/utils/dependencyUtils"
@@ -23,30 +23,37 @@ describe("dependencyUtils", () => {
       expect(isVersionValid("1")).toBe(false)
       expect(isVersionValid("")).toBe(false)
       expect(isVersionValid("1.2")).toBe(false)
+      expect(isVersionValid("1a2b3")).toBe(false)
+      expect(isVersionValid("1.2.")).toBe(false)
+      expect(isVersionValid(">=1.2.3")).toBe(false)
+      expect(isVersionValid(">1.2.3")).toBe(false)
+      expect(isVersionValid("=1.2.3")).toBe(false)
+      expect(isVersionValid("1.2.3 || 2.0.0")).toBe(false)
     })
   })
 
-  describe("getLatestMajorVersion", () => {
+  describe("getUpdatedMajorVersion", () => {
     it("returns latest version when higher", () => {
-      expect(getLatestMajorVersion("1.0.0", "2.0.0")).toBe("2.0.0")
-      expect(getLatestMajorVersion("1.0.0", "1.1.1")).toBe("1.1.1")
+      expect(getUpdatedMajorVersion("1.0.0", "2.0.0")).toBe("2.0.0")
+      expect(getUpdatedMajorVersion("1.0.0", "1.1.1")).toBe("1.1.1")
     })
 
     it("returns current version when latest is not higher", () => {
-      expect(getLatestMajorVersion("2.0.0", "1.0.0")).toBe("2.0.0")
+      expect(getUpdatedMajorVersion("2.0.0", "1.0.0")).toBe("2.0.0")
     })
 
     it("preserves version prefix", () => {
-      expect(getLatestMajorVersion("^1.0.0", "2.0.0")).toBe("^2.0.0")
-      expect(getLatestMajorVersion("~1.0.0", "1.1.0")).toBe("~1.1.0")
+      expect(getUpdatedMajorVersion("^1.0.0", "2.0.0")).toBe("^2.0.0")
+      expect(getUpdatedMajorVersion("~1.0.0", "1.1.0")).toBe("~1.1.0")
     })
 
     it("returns current version when versions are equal", () => {
-      expect(getLatestMajorVersion("1.0.0", "1.0.0")).toBe("1.0.0")
+      expect(getUpdatedMajorVersion("1.0.0", "1.0.0")).toBe("1.0.0")
     })
 
     it("handles invalid versions gracefully", () => {
-      expect(getLatestMajorVersion("invalid", "1.0.0")).toBe("invalid")
+      expect(getUpdatedMajorVersion("invalid", "1.0.0")).toBe("invalid")
+      expect(getUpdatedMajorVersion(">=1.0.0", "2.0.0")).toBe(">=1.0.0")
     })
   })
 
@@ -84,6 +91,10 @@ describe("dependencyUtils", () => {
     it("returns undefined for invalid new version", () => {
       expect(isHigherMinorOrPatch("1.0.0", "invalid")).toBeUndefined()
     })
+
+    it("ignores prerelease versions", () => {
+      expect(isHigherMinorOrPatch("1.0.0", "1.1.0-beta.1")).toBeUndefined()
+    })
   })
 
   describe("isHigherPatch", () => {
@@ -109,6 +120,10 @@ describe("dependencyUtils", () => {
 
     it("returns undefined for invalid new version", () => {
       expect(isHigherPatch("1.0.0", "invalid")).toBeUndefined()
+    })
+
+    it("ignores prerelease versions", () => {
+      expect(isHigherPatch("1.0.0", "1.0.1-beta.1")).toBeUndefined()
     })
   })
 })

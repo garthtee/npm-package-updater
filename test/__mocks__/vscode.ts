@@ -1,13 +1,14 @@
 const workspace = {
   workspaceFolders: [{ uri: { fsPath: "/test/workspace" } }],
-  getConfiguration: () => ({
-    get: (key: string) => {
+  getConfiguration: (_section?: string) => ({
+    get: <T>(key: string, defaultValue?: T): T | undefined => {
       const settings: Record<string, unknown> = {
         indentationType: "Spaces",
         indentationSize: 2,
-        registry: "https://registry.npmjs.com"
+        registry: "https://registry.npmjs.com",
+        createBackup: true
       }
-      return settings[key]
+      return (settings[key] as T | undefined) ?? defaultValue
     }
   })
 }

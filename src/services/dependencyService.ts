@@ -1,10 +1,10 @@
 import { getPackage } from "../api/api"
 import { promises as fs } from "fs"
-import { getLatestMajorVersion, isHigherMinorOrPatch, isHigherPatch, isVersionValid } from "../utils/dependencyUtils"
-import { consoleLogError, getKeyValues, isNumeric } from "../utils/helpers"
-import { IDepItem } from "../types"
+import { type ReleaseType } from "semver"
+import { getUpdatedMajorVersion, isHigherMinorOrPatch, isHigherPatch, isVersionValid } from "../utils/dependencyUtils"
+import { getKeyValues, isNumeric } from "../utils/helpers"
+import { IDepItem, IDependencyFailure, IDependencyUpdateResult } from "../types"
 import { getIndentationSetting } from "../utils/settings"
-import { SemanticLevel } from "../enums/SemanticLevel"
 
 export const getDependencies = async (packageFilePath: string) => {
   const fileContents = await fs.readFile(packageFilePath)
@@ -15,61 +15,52 @@ export const getDependencies = async (packageFilePath: string) => {
   return { fileContents, dependencies, devDependencies, packageObj }
 }
 
-const fetchLatestMajorVersion = async (dep: string, currentVersion: string) => {
+const MAX_CONCURRENT_REQUESTS = 8
+
+const fetchLatestMajorVersion = async (dep: string, currentVersion: string, projectDirectory?: string) => {
   if (!isVersionValid(currentVersion)) {
     return currentVersion
   }
 
-  try {
-    const packageInfo = await getPackage(dep)
+  const packageInfo = await getPackage(dep, projectDirectory)
 
-    const latestVersion = packageInfo["dist-tags"]?.latest
+  const latestVersion = packageInfo["dist-tags"]?.latest
 
-    if (!latestVersion) {
-      return currentVersion
-    }
-
-    return getLatestMajorVersion(currentVersion, latestVersion)
-  } catch (error: any) {
-    consoleLogError(error)
+  if (!latestVersion) {
+    return currentVersion
   }
 
-  return currentVersion
+  return getUpdatedMajorVersion(currentVersion, latestVersion)
 }
 
 const checkForHigherVersions = async (
   dep: string,
   currentVersion: string,
-  checkerFunc: (currentVersion: string, newVersion: string) => boolean | undefined
+  checkerFunc: (currentVersion: string, newVersion: string) => boolean | undefined,
+  projectDirectory?: string
 ) => {
   if (!isVersionValid(currentVersion)) {
     return currentVersion
   }
 
-  try {
-    const packageInfo = await getPackage(dep)
+  const packageInfo = await getPackage(dep, projectDirectory)
 
-    let highestMinorPatch = currentVersion
+  let highestMinorPatch = currentVersion
 
-    Object.keys(packageInfo.versions).forEach((version: any) => {
-      if (checkerFunc(highestMinorPatch, version)) {
-        highestMinorPatch = version
+  packageInfo.versions.forEach((version) => {
+    if (checkerFunc(highestMinorPatch, version)) {
+      highestMinorPatch = version
 
-        return
-      }
-    })
+      return
+    }
+  })
 
-    const firstCharacter = currentVersion.charAt(0)
+  const firstCharacter = currentVersion.charAt(0)
 
-    // Return first character of version of it's not a number (e.g. ~^).
-    return isNumeric(firstCharacter) || highestMinorPatch === currentVersion
-      ? highestMinorPatch
-      : `${firstCharacter}${highestMinorPatch}`
-  } catch (error: any) {
-    consoleLogError(error)
-  }
-
-  return currentVersion
+  // Return first character of version if it's not a number (e.g. ~^).
+  return isNumeric(firstCharacter) || highestMinorPatch === currentVersion
+    ? highestMinorPatch
+    : `${firstCharacter}${highestMinorPatch}`
 }
 
 export const writeDepsToFile = async (
@@ -90,21 +81,60 @@ export const writeDepsToFile = async (
 
   const indentation = getIndentationSetting()
 
-  fs.writeFile(packageFilePath, JSON.stringify(deps, null, indentation))
+  try {
+    await fs.writeFile(packageFilePath, JSON.stringify(deps, null, indentation))
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error)
+
+    throw new Error(`Could not write package file "${packageFilePath}": ${message}`, { cause: error })
+  }
 }
 
-export const getUpdatedDependencies = async (dependencies: any, semanticLevel: SemanticLevel) =>
-  dependencies
-    ? Promise.all(
-        Object.entries(dependencies).map(async ([dependency, version]: any) => {
-          switch (semanticLevel) {
-            case SemanticLevel.MAJOR:
-              return { [dependency]: await fetchLatestMajorVersion(dependency, version) }
-            case SemanticLevel.MINOR:
-              return { [dependency]: await checkForHigherVersions(dependency, version, isHigherMinorOrPatch) }
-            case SemanticLevel.PATCH:
-              return { [dependency]: await checkForHigherVersions(dependency, version, isHigherPatch) }
-          }
-        })
-      )
-    : null
+export const getUpdatedDependencies = async (
+  dependencies: Record<string, string> | undefined,
+  semanticLevel: ReleaseType,
+  projectDirectory?: string
+): Promise<IDependencyUpdateResult> => {
+  if (!dependencies) {
+    return { updatedDependencies: null, failures: [] }
+  }
+
+  const entries = Object.entries(dependencies)
+  const updatedDependencies: IDepItem[] = new Array(entries.length)
+  const failures: IDependencyFailure[] = []
+  let nextIndex = 0
+
+  const updateNextDependency = async (): Promise<void> => {
+    while (nextIndex < entries.length) {
+      const index = nextIndex++
+      const [dependency, version] = entries[index]
+
+      try {
+        let updatedVersion = version
+
+        switch (semanticLevel) {
+          case "major":
+            updatedVersion = await fetchLatestMajorVersion(dependency, version, projectDirectory)
+            break
+          case "minor":
+            updatedVersion = await checkForHigherVersions(dependency, version, isHigherMinorOrPatch, projectDirectory)
+            break
+          case "patch":
+            updatedVersion = await checkForHigherVersions(dependency, version, isHigherPatch, projectDirectory)
+            break
+        }
+
+        updatedDependencies[index] = { [dependency]: updatedVersion }
+      } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : String(error)
+        updatedDependencies[index] = { [dependency]: version }
+        failures.push({ dependency, message })
+      }
+    }
+  }
+
+  const workerCount = Math.min(MAX_CONCURRENT_REQUESTS, entries.length)
+  await Promise.all(Array.from({ length: workerCount }, updateNextDependency))
+
+  return { updatedDependencies, failures }
+}

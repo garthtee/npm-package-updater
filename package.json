@@ -19,7 +19,7 @@
     "url": "https://github.com/garthtee/npm-package-updater/issues"
   },
   "homepage": "https://github.com/garthtee/npm-package-updater#readme",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "main": "./out/extension.js",
   "activationEvents": [],
   "icon": "images/icon.png",
@@ -48,6 +48,11 @@
           "type": "string",
           "default": "https://registry.npmjs.com",
           "description": "Registry URL (e.g: https://registry.npmjs.com)"
+        },
+        "npmPackageUpdater.createBackup": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically create package.json.bak before updating dependencies"
         }
       }
     },
@@ -86,6 +91,9 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
+    "typecheck:root": "tsc --noEmit -p ./",
+    "typecheck:test": "tsc --noEmit -p test/tsconfig.json",
+    "typecheck": "npm run typecheck:root && npm run typecheck:test",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
@@ -100,7 +108,8 @@
     "@types/glob": "9.0.0",
     "@types/jest": "30.0.0",
     "@types/mocha": "10.0.10",
-    "@types/node": "25.5.2",
+    "@types/node": "26.6.1",
+    "@types/semver": "7.8.0",
     "@types/vscode": "1.110.0",
     "@typescript-eslint/eslint-plugin": "8.58.0",
     "@typescript-eslint/parser": "8.58.0",
@@ -108,7 +117,7 @@
     "glob": "13.0.6",
     "husky": "9.1.7",
     "jest": "30.3.0",
-    "mocha": "7.2.0",
+    "mocha": "12.0.2",
     "module-alias": "2.3.4",
     "prettier": "3.8.1",
     "ts-jest": "29.4.9",
@@ -120,6 +129,6 @@
     "vscode-test": "1.4.1"
   },
   "dependencies": {
-    "axios": "1.14.0"
+    "semver": "7.8.5"
   }
 }

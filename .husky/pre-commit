@@ -1,4 +1,5 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-npm run tidy:check
+if ! npm run tidy:check; then
+  echo ""
+  echo "Formatting check failed. Run 'npm run tidy' to fix formatting, then commit again."
+  exit 1
+fi

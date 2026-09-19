@@ -31,4 +31,10 @@ const getRegistrySetting = () => {
   return registry && registry?.trim() !== "" ? registry : "https://registry.npmjs.com"
 }
 
-export { getIndentationSetting, getRegistrySetting }
+const getCreateBackupSetting = () => {
+  const settings = vscode.workspace.getConfiguration(CONFIG_NAME)
+
+  return settings.get<boolean>("createBackup", true)
+}
+
+export { getIndentationSetting, getRegistrySetting, getCreateBackupSetting }

@@ -8,7 +8,6 @@ export default tseslint.config(
     files: ["**/*.ts"],
     languageOptions: { parserOptions: { ecmaVersion: "latest", sourceType: "module" } },
     rules: {
-      semi: "warn",
       "@typescript-eslint/ban-ts-comment": "off",
       curly: "warn",
       eqeqeq: "warn",

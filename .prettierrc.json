@@ -3,6 +3,7 @@
   "bracketSpacing": true,
   "trailingComma": "none",
   "semi": false,
-  "objectWrap": "collapse",
+  "singleQuote": false,
+  "objectWrap": "preserve",
   "printWidth": 120
 }
