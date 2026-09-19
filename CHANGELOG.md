@@ -1,14 +1,14 @@
 # Change Log
 
-## Unreleased
+## 2.2.0 - 2026-09-19
 
 ### Added
 
 - Add automatic `package.json.bak` backups before dependency updates, with a setting to disable them.
 - Add support for authenticated private registries, scoped registries, proxies, and custom certificates through the project's npm configuration.
 - Add per-package failure reporting when dependency metadata cannot be retrieved.
-- Add production and test type-checking scripts.
-- Add a VS Code Extension Host launch configuration and shared Prettier workspace settings.
+- Add production and test type-checking scripts. (Developer tooling)
+- Add a VS Code Extension Host launch configuration and shared Prettier workspace settings. (Developer tooling)
 
 ### Changed
 
@@ -18,13 +18,14 @@
 - Show successful updates in the VS Code status bar.
 - Preserve dependency versions when individual registry requests fail instead of failing the entire update.
 - Replace deprecated VS Marketplace Shields badges with approved marketplace badges.
+- Improve pre-commit formatting failures with instructions for applying the required fixes. (Developer tooling)
 
 ### Fixed
 
 - Wait for package file writes and backups to finish before reporting success.
 - Include filesystem details when package file writes or backups fail.
 - Reject malformed or incomplete package metadata returned by npm.
-- Align VS Code format-on-save behavior with the project's Prettier configuration.
+- Align VS Code format-on-save behavior with the project's Prettier configuration. (Developer tooling)
 
 ## 2.1.0 - 2026-04-06
 

@@ -3,13 +3,13 @@
 <a href="https://marketplace.visualstudio.com/items?itemName=GarthToland.npm-package-updater">
   <img
     alt="VS Code Marketplace Version"
-    src="https://vsmarketplacebadges.dev/version/GarthToland.npm-package-updater.svg"
+    src="https://vsmarketplacebadges.dev/version/GarthToland.npm-package-updater.png"
   />
 </a>
 <a href="https://marketplace.visualstudio.com/items?itemName=GarthToland.npm-package-updater">
   <img
     alt="VS Code Marketplace Installs"
-    src="https://vsmarketplacebadges.dev/installs/GarthToland.npm-package-updater.svg"
+    src="https://vsmarketplacebadges.dev/installs/GarthToland.npm-package-updater.png"
   />
 </a>
 
