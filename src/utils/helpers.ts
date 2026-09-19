@@ -1,9 +1,8 @@
 import * as vscode from "vscode"
 import { promises as fs } from "fs"
-import { BACKUP_MSG, DO_NOT_SHOW_AGAIN } from "../constants/generic"
 import Message from "../enums/Message"
-import YesNo from "../enums/YesNo"
 import { IDepItem } from "../types"
+import { getCreateBackupSetting } from "./settings"
 
 const NUMBER_REGEX = new RegExp("^[0-9]+$")
 
@@ -56,20 +55,17 @@ const displayMessage = (message: string, type: Message, options: string[] = []) 
  * @param filePath Package.json file path
  * @returns boolean Whether successful
  */
-const doBackup = async (context: vscode.ExtensionContext, filePath: string) => {
-  if (context.globalState.get(BACKUP_MSG)) {
+const doBackup = async (filePath: string) => {
+  if (!getCreateBackupSetting()) {
     return true
   }
 
-  const backupMsgOptions = [DO_NOT_SHOW_AGAIN, YesNo.YES, YesNo.NO]
-  const result = await displayMessage("Backup package.json?", Message.WARN, backupMsgOptions)
+  try {
+    await fs.copyFile(filePath, `${filePath}.bak`)
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error)
 
-  if (result === YesNo.YES) {
-    fs.copyFile(filePath, `${filePath}.bak`)
-  } else if (result === DO_NOT_SHOW_AGAIN) {
-    context.globalState.update(BACKUP_MSG, true)
-  } else if (!result) {
-    displayMessage("Backup failed.", Message.ERROR)
+    await displayMessage(`Could not create backup: ${message}`, Message.ERROR)
     return false
   }
 

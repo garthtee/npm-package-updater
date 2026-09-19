@@ -1,23 +1,23 @@
 import * as vscode from "vscode"
 import { promises as fs } from "fs"
+import { type ReleaseType } from "semver"
 import { displayMessage, doBackup, getPath } from "./utils/helpers"
 import { getDependencies, getUpdatedDependencies, writeDepsToFile } from "./services/dependencyService"
 import Message from "./enums/Message"
 import { getCompletedMessage } from "./utils/messages"
-import { SemanticLevel } from "./enums/SemanticLevel"
 
 const TITLE = "NPM Package Updater"
 
-const createCommand = (context: vscode.ExtensionContext, commandName: string, semanticLevel: SemanticLevel) => {
+const createCommand = (commandName: string, semanticLevel: ReleaseType) => {
   return vscode.commands.registerCommand(commandName, async () => {
-    const path = getPath()
+    const projectDirectory = getPath()
 
-    if (!path) {
+    if (!projectDirectory) {
       displayMessage("Working folder not found, open a folder an try again.", Message.ERROR)
       return
     }
 
-    const packageFilePath = `${path}/package.json`
+    const packageFilePath = `${projectDirectory}/package.json`
 
     try {
       // Check if file exists
@@ -27,11 +27,13 @@ const createCommand = (context: vscode.ExtensionContext, commandName: string, se
       return
     }
 
-    if (!(await doBackup(context, packageFilePath))) {
-      return
-    }
-
     try {
+      if (!(await doBackup(packageFilePath))) {
+        return
+      }
+
+      const failedDependencies: string[] = []
+
       await vscode.window.withProgress(
         { location: vscode.ProgressLocation.Window, cancellable: false, title: TITLE },
         async (progress) => {
@@ -43,26 +45,41 @@ const createCommand = (context: vscode.ExtensionContext, commandName: string, se
 
           progress.report({ message: "Getting latest dependencies", increment: 10 })
 
-          const updatedDependencies = await getUpdatedDependencies(dependencies, semanticLevel)
+          const dependencyResult = await getUpdatedDependencies(dependencies, semanticLevel, projectDirectory)
+          failedDependencies.push(...dependencyResult.failures.map(({ dependency }) => dependency))
 
           progress.report({ message: "Getting latest devDependencies", increment: 40 })
 
-          const updatedDevDependencies = await getUpdatedDependencies(devDependencies, semanticLevel)
+          const devDependencyResult = await getUpdatedDependencies(devDependencies, semanticLevel, projectDirectory)
+          failedDependencies.push(...devDependencyResult.failures.map(({ dependency }) => dependency))
 
           progress.report({ message: "Updating package.json file", increment: 80 })
 
           // Write updated deps to file
 
-          await writeDepsToFile(packageFilePath, packageObj, updatedDependencies, updatedDevDependencies)
+          await writeDepsToFile(
+            packageFilePath,
+            packageObj,
+            dependencyResult.updatedDependencies,
+            devDependencyResult.updatedDependencies
+          )
 
           progress.report({ increment: 100 })
         }
       )
 
-      getCompletedMessage(context)
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred"
-      displayMessage(`Failed to update packages: ${errorMessage}`, Message.ERROR)
+      if (failedDependencies.length > 0) {
+        await displayMessage(
+          `Version update completed, but could not check: ${failedDependencies.join(", ")}.`,
+          Message.WARN
+        )
+      } else {
+        getCompletedMessage()
+      }
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error)
+
+      await displayMessage(`Failed to update packages: ${message}`, Message.ERROR)
     }
   })
 }
@@ -71,11 +88,11 @@ const createCommand = (context: vscode.ExtensionContext, commandName: string, se
 export function activate(context: vscode.ExtensionContext) {
   console.log("npm-package-updater is now active!")
 
-  const updateLatestMajors = createCommand(context, "npm-package-updater.updateLatestMajors", SemanticLevel.MAJOR)
+  const updateLatestMajors = createCommand("npm-package-updater.updateLatestMajors", "major")
 
-  const updateLatestMinors = createCommand(context, "npm-package-updater.updateLatestMinors", SemanticLevel.MINOR)
+  const updateLatestMinors = createCommand("npm-package-updater.updateLatestMinors", "minor")
 
-  const updateLatestPatch = createCommand(context, "npm-package-updater.updateLatestPatch", SemanticLevel.PATCH)
+  const updateLatestPatch = createCommand("npm-package-updater.updateLatestPatch", "patch")
 
   context.subscriptions.push(updateLatestMajors)
   context.subscriptions.push(updateLatestMinors)
